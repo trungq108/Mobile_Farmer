@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MobileJoystick : MonoBehaviour
+public class MobileJoystick : Singleton<MobileJoystick>
 {
     [Header(" Elements ")]
     [SerializeField] private RectTransform joystickOutline;
@@ -14,7 +14,6 @@ public class MobileJoystick : MonoBehaviour
     private Vector3 move;
     private bool canControl;
 
-    // Start is called before the first frame update
     void Start()
     {
         HideJoystick();
@@ -25,7 +24,6 @@ public class MobileJoystick : MonoBehaviour
         HideJoystick();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(canControl)
