@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class Constain 
 {
-    public const string Idle = "Idle";
-    public const string Run = "Run";
+    public const string Idle = "idle";
+    public const string Run = "run";
+    public const string Sow = "sow";
 }
