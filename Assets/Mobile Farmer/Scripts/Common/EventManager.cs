@@ -46,18 +46,15 @@ public static class EventManager
 
 
 // eventType
-public class PlayerScoredEvent
+public class SowSeed
 {
-    public int PlayerID;
-    public int Score;
+    public Vector3[] collisionPositions;
 }
 
-public class GameOverEvent
+public class FieldFulled
 {
-    public string Winner;
+    public CropField cropField;
 }
 
-public class BoxColorEvent
-{
-    public Material Material;
-}
+
+
