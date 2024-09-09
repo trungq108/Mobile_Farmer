@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public static class EventManager
@@ -54,6 +52,11 @@ public class SowSeed
 public class FieldFulled
 {
     public CropField cropField;
+}
+
+public class ChangeTool
+{
+    public Tool toolChange;
 }
 
 

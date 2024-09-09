@@ -1,12 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-    public enum State
-    {
-        Empty,
-        Filled,
-        Watered,
-    }
 
 public class CropTile : MonoBehaviour
 {

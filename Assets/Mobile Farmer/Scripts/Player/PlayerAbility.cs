@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class PlayerAbility : MonoBehaviour
 {
     [SerializeField] private PlayerAnimation anim;
+    [SerializeField] private PlayerTool tool;
     [SerializeField] private ParticleSystem seedParticle;
     [SerializeField] private LayerMask cropLayerMask;
 
@@ -15,6 +16,7 @@ public class PlayerAbility : MonoBehaviour
     {
         EventManager.AddListener<SowSeed>(SowSeedCallBack);
         EventManager.AddListener<FieldFulled>(FieldFulledCallBack);
+        EventManager.AddListener<ChangeTool>(ChangeToolCallBack);
 
     }
 
@@ -22,6 +24,7 @@ public class PlayerAbility : MonoBehaviour
     {
         EventManager.RemoveListener<SowSeed>(SowSeedCallBack);
         EventManager.RemoveListener<FieldFulled>(FieldFulledCallBack);
+        EventManager.RemoveListener<ChangeTool>(ChangeToolCallBack);
 
     }
 
@@ -40,7 +43,8 @@ public class PlayerAbility : MonoBehaviour
         if (other.CompareTag("CropField"))
         {
             currentCropField = other.GetComponent<CropField>();
-            if (currentCropField.IsEmpty()) Sowing();
+            if (currentCropField.IsEmpty() && tool.CurrentTool == Tool.Sow)
+                Sowing();
         }
     }
 
@@ -71,7 +75,7 @@ public class PlayerAbility : MonoBehaviour
     public void SowSeedCallBack(SowSeed e)
     {
         Vector3[] collisionPositions = e.collisionPositions;
-        if(currentCropField != null)
+        if (currentCropField != null)
         {
             currentCropField.FillCropTiles(collisionPositions);
         }
@@ -79,6 +83,23 @@ public class PlayerAbility : MonoBehaviour
 
     private void FieldFulledCallBack(FieldFulled e)
     {
-        StopSowing();
+        if (e.cropField == currentCropField)
+            StopSowing();
+    }
+
+    private void ChangeToolCallBack(ChangeTool e)
+    {
+        if (currentCropField == null) return;
+
+        Tool toolChange = e.toolChange;
+        if (toolChange == Tool.Empty)
+            StopSowing();
+        if (toolChange == Tool.Sow)
+            Sowing();
+        if (toolChange == Tool.Water)
+            StopSowing();
+        if (toolChange == Tool.Harvest)
+            StopSowing();
+
     }
 }
