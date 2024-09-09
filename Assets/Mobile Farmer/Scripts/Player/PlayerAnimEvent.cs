@@ -7,5 +7,7 @@ public class PlayerAnimEvent : MonoBehaviour
     [SerializeField] private PlayerAbility ability;
 
     public void ThrowSeedAnimEvent() => ability.ThrowSeed();
+    public void ThrowWaterAnimEnvent() => ability.ThrowWater();
+
 
 }

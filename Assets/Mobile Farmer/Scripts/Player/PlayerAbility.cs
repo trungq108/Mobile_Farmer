@@ -8,14 +8,17 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] private PlayerAnimation anim;
     [SerializeField] private PlayerTool tool;
     [SerializeField] private ParticleSystem seedParticle;
-    [SerializeField] private LayerMask cropLayerMask;
+    [SerializeField] private ParticleSystem waterParticle;
 
     private CropField currentCropField;
 
     private void OnEnable()
     {
         EventManager.AddListener<SowSeed>(SowSeedCallBack);
-        EventManager.AddListener<FieldFulled>(FieldFulledCallBack);
+        EventManager.AddListener<WaterSeed>(WaterSeedCallBack);
+        EventManager.AddListener<FieldSown>(FieldSownCallBack);
+        EventManager.AddListener<FieldWatered>(FieldWateredCallBack);
+
         EventManager.AddListener<ChangeTool>(ChangeToolCallBack);
 
     }
@@ -23,20 +26,12 @@ public class PlayerAbility : MonoBehaviour
     private void OnDisable()
     {
         EventManager.RemoveListener<SowSeed>(SowSeedCallBack);
-        EventManager.RemoveListener<FieldFulled>(FieldFulledCallBack);
+        EventManager.RemoveListener<WaterSeed>(WaterSeedCallBack);
+        EventManager.RemoveListener<FieldSown>(FieldSownCallBack);
+        EventManager.RemoveListener<FieldWatered>(FieldWateredCallBack);
         EventManager.RemoveListener<ChangeTool>(ChangeToolCallBack);
 
     }
-
-    //private void Update()
-    //{
-    //    Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 5, Color.red);
-    //    if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, 5f, cropLayerMask))
-    //    {
-    //        Sowing();
-    //    }
-    //    else StopSowing();
-    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -45,6 +40,8 @@ public class PlayerAbility : MonoBehaviour
             currentCropField = other.GetComponent<CropField>();
             if (currentCropField.IsEmpty() && tool.CurrentTool == Tool.Sow)
                 Sowing();
+            if (currentCropField.IsSown() && tool.CurrentTool == Tool.Water)
+                Watering();
         }
     }
 
@@ -53,38 +50,51 @@ public class PlayerAbility : MonoBehaviour
         if (other.CompareTag("CropField"))
         {
             StopSowing();
+            StopWatering();
             currentCropField = null;
         }
     }
 
-    public void Sowing()
-    {
-        anim.PlaySowAnim();
-    }
+    public void Sowing() => anim.PlaySowAnim();
+    public void StopSowing() => anim.StopSowAnim();
+    public void ThrowSeed() => seedParticle.Play();
 
-    public void StopSowing()
+    public void Watering() => anim.PlayWaterAnim();
+    public void StopWatering()
     {
-        anim.StopSowAnim();
-    }
-
-    public void ThrowSeed()
-    {
-        seedParticle.Play();
-    }
+        anim.StopWaterAnim();
+        waterParticle.Stop();
+    } 
+    public void ThrowWater() => waterParticle.Play();
 
     public void SowSeedCallBack(SowSeed e)
     {
         Vector3[] collisionPositions = e.collisionPositions;
         if (currentCropField != null)
         {
-            currentCropField.FillCropTiles(collisionPositions);
+            currentCropField.SowCropTiles(collisionPositions);
         }
     }
 
-    private void FieldFulledCallBack(FieldFulled e)
+    public void WaterSeedCallBack(WaterSeed e)
+    {
+        Vector3[] collisionPositions = e.collisionPositions;
+        if (currentCropField != null)
+        {
+            currentCropField.WaterCropTiles(collisionPositions);
+        }
+    }
+
+    private void FieldSownCallBack(FieldSown e)
     {
         if (e.cropField == currentCropField)
             StopSowing();
+    }
+
+    private void FieldWateredCallBack(FieldWatered e)
+    {
+        if (e.cropField == currentCropField)
+            StopWatering();
     }
 
     private void ChangeToolCallBack(ChangeTool e)
@@ -92,14 +102,28 @@ public class PlayerAbility : MonoBehaviour
         if (currentCropField == null) return;
 
         Tool toolChange = e.toolChange;
-        if (toolChange == Tool.Empty)
-            StopSowing();
-        if (toolChange == Tool.Sow)
-            Sowing();
-        if (toolChange == Tool.Water)
-            StopSowing();
-        if (toolChange == Tool.Harvest)
-            StopSowing();
+        switch (toolChange)
+        {
+            case Tool.Empty:
+                StopSowing();
+                StopWatering();
+                break;
+
+            case Tool.Sow:
+                StopWatering();
+                if (currentCropField.IsEmpty()) Sowing();
+                break;
+
+            case Tool.Water:
+                StopSowing();
+                if(currentCropField.IsSown()) Watering();
+                break;
+
+            case Tool.Harvest:
+                StopSowing();
+                StopWatering();
+                break;
+        }
 
     }
 }

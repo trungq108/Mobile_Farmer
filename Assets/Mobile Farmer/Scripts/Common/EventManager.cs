@@ -49,7 +49,17 @@ public class SowSeed
     public Vector3[] collisionPositions;
 }
 
-public class FieldFulled
+public class WaterSeed 
+{
+    public Vector3[] collisionPositions;
+}
+
+public class FieldSown
+{
+    public CropField cropField;
+}
+
+public class FieldWatered
 {
     public CropField cropField;
 }

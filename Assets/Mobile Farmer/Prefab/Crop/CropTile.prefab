@@ -97,3 +97,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   corn: {fileID: 4786410269837224754, guid: b3f48bfe879e7ab46807e8645d80fb99, type: 3}
+  tileMesh: {fileID: 1675199972916937816}

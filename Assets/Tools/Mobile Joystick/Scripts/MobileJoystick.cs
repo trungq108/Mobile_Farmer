@@ -7,6 +7,7 @@ public class MobileJoystick : Singleton<MobileJoystick>
     [Header(" Elements ")]
     [SerializeField] private RectTransform joystickOutline;
     [SerializeField] private RectTransform joystickKnob;
+    private RectTransform canvasRT;
 
     [Header(" Settings ")]
     [SerializeField] private float moveFactor;
@@ -14,9 +15,12 @@ public class MobileJoystick : Singleton<MobileJoystick>
     private Vector3 move;
     private bool canControl;
 
+
+
     void Start()
     {
         HideJoystick();
+        canvasRT = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
     }
 
     private void OnDisable()
@@ -57,8 +61,7 @@ public class MobileJoystick : Singleton<MobileJoystick>
         Vector3 currentPosition = Input.mousePosition;
         Vector3 direction = currentPosition - clickedPosition;
 
-        float canvasScale = GetComponentInParent<Canvas>().GetComponent<RectTransform>().localScale.x;
-
+        float canvasScale = canvasRT.localScale.x;
         float moveMagnitude = direction.magnitude * moveFactor * canvasScale;
 
         float absoluteWidth = joystickOutline.rect.width / 2;

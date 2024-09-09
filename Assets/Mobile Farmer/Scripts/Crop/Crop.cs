@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class Crop : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Grown()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.localScale = Vector3.one * 3;
     }
 }

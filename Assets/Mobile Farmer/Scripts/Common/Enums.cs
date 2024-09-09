@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 public enum State
 {
     Empty,
-    Filled,
+    Sown,
     Watered,
 }
 

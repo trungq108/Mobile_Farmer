@@ -5,8 +5,11 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    private string currentAnim = "";
+    [SerializeField] private GameObject wateringCan;
+
     private int sowAnimLayer = 1;
+    private int waterAnimLayer = 2;
+    private int havestAnimLayer = 3;
 
 
     public void MovementAnim(Vector3 direction)
@@ -29,14 +32,15 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetLayerWeight(sowAnimLayer, 0);
     }
 
-
-    public void ChangAnim(string nextAnim)
+    public void PlayWaterAnim()
     {
-        if (currentAnim != nextAnim)
-        {
-            animator.ResetTrigger(nextAnim);
-            currentAnim = nextAnim;
-            animator.SetTrigger(currentAnim);
-        }
+        animator.SetLayerWeight(waterAnimLayer, 1);
+        wateringCan.SetActive(true);
+    }
+
+    public void StopWaterAnim()
+    {
+        animator.SetLayerWeight(waterAnimLayer, 0);
+        wateringCan.SetActive(false);
     }
 }
