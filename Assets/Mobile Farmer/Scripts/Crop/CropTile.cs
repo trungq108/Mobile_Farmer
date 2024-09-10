@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,12 +21,15 @@ public class CropTile : MonoBehaviour
         crop = Instantiate(data.cropPrefab, this.transform);
         crop.transform.localPosition = Vector3.up / 2;
         crop.transform.localRotation = Quaternion.identity;
+        crop.transform.localScale = Vector3.zero;
+        crop.transform.DOScale(Vector3.one, 1f);
+        
     }
 
     public void Water()
     {
         state = State.Watered;
-        tileMesh.material.color = Color.white * 0.3f;
+        tileMesh.material.DOColor(Color.white * 0.3f, 0.5f);
         crop.Grown();
     }
 
