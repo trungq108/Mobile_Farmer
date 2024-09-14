@@ -9,14 +9,12 @@ public class CropUIContainer : MonoBehaviour
     [SerializeField] private Image cropIcon;
     [SerializeField] private TextMeshProUGUI amountText;
 
-    private Item item;  
+    public Item Item {  get; private set; }  
 
     public void Configue(Item item)
     {
-        this.item = item;
-        this.cropIcon.sprite = item.cropIcon;
+        this.Item = item;
+        this.cropIcon.sprite = GameAsset.Instance.GetSpriteFromCropType(item.cropType);
         this.amountText.text = item.amount.ToString();
     }
-
-
 }

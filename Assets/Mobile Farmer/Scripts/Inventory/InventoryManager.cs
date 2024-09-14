@@ -7,7 +7,7 @@ public class InventoryManager : Singleton<InventoryManager>
 {
     public Inventory inventory = new Inventory();
     private InventoryUIManager UI;
-    private string saveKey = "PlayerInventory";
+    private const string saveKey = "PlayerInventory";
 
     private void OnEnable()
     {
@@ -22,28 +22,18 @@ public class InventoryManager : Singleton<InventoryManager>
     void Start()
     {
         UI = GetComponent<InventoryUIManager>();
-        LoadInventory(); // Load inventory when the game starts
+        LoadInventory(); 
     }
 
     public void LoadInventory()
     {
-        if (ES3.KeyExists(saveKey))
-        {
-            inventory = ES3.Load<Inventory>(saveKey);
-            Debug.Log("Inventory loaded.");
-            Debug.Log(inventory.items.Count);
-        }
-        else
-        {
-            Debug.Log("No save data found, starting with an empty inventory.");
-        }
-        UI.CreaCropUIContainers();
+        inventory = ES3.Load<Inventory>(saveKey, new Inventory());
+        UI.CreatCropUIContainers(inventory.items);
     }
 
     public void SaveInventory()
     {
         ES3.Save(saveKey, inventory);
-        Debug.Log("Inventory saved.");
     }
 
     private void OnCropHarvestCallBack(OnCropHarvest e)

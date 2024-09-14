@@ -2,13 +2,14 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class CropField : MonoBehaviour
 {
     [SerializeField] private Transform tileParent;
-    [SerializeField] private CropDataSO cropData;
+    private CropDataSO cropData;
     private List<CropTile> cropTiles = new List<CropTile>();
     private State state;
     private int sownTileIndex = 0;
@@ -21,6 +22,7 @@ public class CropField : MonoBehaviour
         {
             cropTiles.Add(t.GetComponent<CropTile>());
         }
+        cropData = GameAsset.Instance.CropDataSO;
         state = State.Empty;
     }
 

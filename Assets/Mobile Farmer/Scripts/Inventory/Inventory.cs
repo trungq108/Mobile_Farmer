@@ -5,13 +5,11 @@ using UnityEngine;
 public class Item
 {
     public CropType cropType;
-    public Sprite cropIcon;
     public int amount;
 
-    public Item (CropType cropType,Sprite cropIcon ,int amount)
+    public Item (CropType cropType ,int amount)
     {
         this.cropType = cropType;
-        this.cropIcon = cropIcon;
         this.amount = amount;
     }
 }
@@ -29,22 +27,18 @@ public class Inventory
         {
             if (items[i].cropType == cropData.cropType)
             {
-                // Increment the item amount if it exists
                 items[i].amount++;
+                InventoryUIManager.Instance.UpdateUIContainers(items[i]);
                 itemFound = true;
-                break; // No need to continue loop if item is found
+                break; 
             }
         }
-
-        // If item wasn't found, add it as a new item
         if (!itemFound)
         {
-            items.Add(new Item(cropData.cropType, cropData.cropIcon, 1));
+            items.Add(new Item(cropData.cropType, 1));
         }
 
         Debug.Log("Item Count = " + items.Count);
-
-        // Logging items
         for (int i = 0; i < items.Count; i++)
         {
             Debug.Log(items[i] + " " + items[i].cropType.ToString() + " " + items[i].amount);
