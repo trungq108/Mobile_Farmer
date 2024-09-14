@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class InventoryManager : Singleton<InventoryManager>
 {
-    private Inventory inventory = new Inventory();
-    private const string saveKey = "PlayerInventory";
+    public Inventory inventory = new Inventory();
+    private InventoryUIManager UI;
+    private string saveKey = "PlayerInventory";
 
     private void OnEnable()
     {
@@ -20,6 +21,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
     void Start()
     {
+        UI = GetComponent<InventoryUIManager>();
         LoadInventory(); // Load inventory when the game starts
     }
 
@@ -35,6 +37,7 @@ public class InventoryManager : Singleton<InventoryManager>
         {
             Debug.Log("No save data found, starting with an empty inventory.");
         }
+        UI.CreaCropUIContainers();
     }
 
     public void SaveInventory()
@@ -45,10 +48,8 @@ public class InventoryManager : Singleton<InventoryManager>
 
     private void OnCropHarvestCallBack(OnCropHarvest e)
     {
-        CropType cropType = e.cropData.cropType;
-        inventory.TryAddItem(cropType);
+        inventory.TryAddItem(e.cropData);
         SaveInventory();
-
     }
 
     // DEBUG

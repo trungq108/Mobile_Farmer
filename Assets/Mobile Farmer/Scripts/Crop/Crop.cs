@@ -33,6 +33,6 @@ public class Crop : MonoBehaviour
         OnCropHarvest e = new OnCropHarvest();
         e.cropData = this.cropData;
         EventManager.TriggerEvent(e);
-        LeanPool.Despawn(this);
+        LeanPool.Despawn(this,1.5f);
     }
 }

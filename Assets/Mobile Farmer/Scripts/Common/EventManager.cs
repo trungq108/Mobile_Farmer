@@ -5,7 +5,7 @@ using UnityEngine;
 public static class EventManager
 {
     private static Dictionary<Type, List<Action<object>>> eventHandlers = new Dictionary<Type, List<Action<object>>>();
-
+    
     public static void AddListener<T>(Action<T> handler)
     {
         Type eventType = typeof(T);

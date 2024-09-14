@@ -18,7 +18,7 @@ public class CropTile : MonoBehaviour
     public void Sow(CropData data)
     {
         state = State.Sown;
-        crop = LeanPool.Spawn(data.cropPrefab, transform.position, Quaternion.identity, this.transform);
+        crop = LeanPool.Spawn(data.cropPrefab, transform.position, Quaternion.identity, this.transform).GetComponent<Crop>();
         crop.OnInit(data);
     }
 
@@ -34,8 +34,6 @@ public class CropTile : MonoBehaviour
         state = State.Empty;
         tileMesh.material.DOColor(Color.white, 0.5f);
         crop.HarvestSequence();
-        //GameObject newCropHarvest = PoolManager.Instance.SpawnCropHavest(transform.position + Vector3.up, Quaternion.Euler(-90f, 0f, 0f));
-        //PoolManager.Instance.DespawnCropHavest(newCropHarvest,2f);
     }
 
     public bool IsEmpty() => state == State.Empty;

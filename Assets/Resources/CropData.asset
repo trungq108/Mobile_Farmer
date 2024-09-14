@@ -14,14 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DataBase:
   - cropType: 0
-    cropPrefab: {fileID: 1747266812501837325, guid: b3f48bfe879e7ab46807e8645d80fb99,
+    cropPrefab: {fileID: 4786410269837224754, guid: b3f48bfe879e7ab46807e8645d80fb99,
       type: 3}
-    cropName: Corn
-    cropPrice: 0
-    cropSellPrice: 0
+    cropIcon: {fileID: 21300000, guid: 82b1f675f4ea8fb4c8b63b1df1418228, type: 3}
   - cropType: 1
-    cropPrefab: {fileID: 5798776365534449116, guid: c39d3c0dad3bed9499006f920a7a5919,
+    cropPrefab: {fileID: 732489487806963939, guid: c39d3c0dad3bed9499006f920a7a5919,
       type: 3}
-    cropName: Tomato
-    cropPrice: 0
-    cropSellPrice: 0
+    cropIcon: {fileID: 21300000, guid: 69f62ad8086630a4ea97d69f8c6a9367, type: 3}

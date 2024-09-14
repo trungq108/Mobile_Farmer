@@ -1,6 +1,4 @@
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CropData", menuName = "ScriptableObject / CropData", order = 0)]
@@ -11,11 +9,9 @@ public class CropDataSO : ScriptableObject
 }
 
 [System.Serializable]
-public struct CropData
+public class CropData
 {
     public CropType cropType;
-    public Crop cropPrefab;
-    public string cropName;
-    public int cropPrice;
-    public int cropSellPrice;
+    public GameObject cropPrefab;
+    public Sprite cropIcon;
 }
