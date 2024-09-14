@@ -13,6 +13,7 @@ public class CropDataSO : ScriptableObject
 [System.Serializable]
 public struct CropData
 {
+    public CropType cropType;
     public Crop cropPrefab;
     public string cropName;
     public int cropPrice;

@@ -6,11 +6,17 @@ public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject wateringCan;
+    [SerializeField] private GameObject scythe;
 
     private int sowAnimLayer = 1;
     private int waterAnimLayer = 2;
     private int havestAnimLayer = 3;
 
+    private void Awake()
+    {
+        wateringCan.SetActive(false);
+        scythe.SetActive(false);
+    }
 
     public void MovementAnim(Vector3 direction)
     {
@@ -42,5 +48,17 @@ public class PlayerAnimation : MonoBehaviour
     {
         animator.SetLayerWeight(waterAnimLayer, 0);
         wateringCan.SetActive(false);
+    }
+
+    public void PlayHarvest()
+    {
+        animator.SetLayerWeight(havestAnimLayer, 1);
+        scythe.SetActive(true);
+    }
+
+    public void StopPlayHarvest()
+    {
+        animator.SetLayerWeight(havestAnimLayer, 0);
+        scythe.SetActive(false);
     }
 }

@@ -13,5 +13,15 @@ MonoBehaviour:
   m_Name: CropData
   m_EditorClassIdentifier: 
   DataBase:
-  - cropPrefab: {fileID: 1747266812501837325, guid: b3f48bfe879e7ab46807e8645d80fb99,
+  - cropType: 0
+    cropPrefab: {fileID: 1747266812501837325, guid: b3f48bfe879e7ab46807e8645d80fb99,
       type: 3}
+    cropName: Corn
+    cropPrice: 0
+    cropSellPrice: 0
+  - cropType: 1
+    cropPrefab: {fileID: 5798776365534449116, guid: c39d3c0dad3bed9499006f920a7a5919,
+      type: 3}
+    cropName: Tomato
+    cropPrice: 0
+    cropSellPrice: 0

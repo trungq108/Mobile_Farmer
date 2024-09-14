@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,6 +10,8 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] private PlayerTool tool;
     [SerializeField] private ParticleSystem seedParticle;
     [SerializeField] private ParticleSystem waterParticle;
+    [SerializeField] private Transform harvestPoint;
+    [SerializeField] [Range(0f, 3f)] private float harvestRange;
 
     private CropField currentCropField;
 
@@ -18,7 +21,7 @@ public class PlayerAbility : MonoBehaviour
         EventManager.AddListener<WaterSeed>(WaterSeedCallBack);
         EventManager.AddListener<FieldSown>(FieldSownCallBack);
         EventManager.AddListener<FieldWatered>(FieldWateredCallBack);
-
+        EventManager.AddListener<FieldHarvested>(FieldHarvestedCallBack);
         EventManager.AddListener<ChangeTool>(ChangeToolCallBack);
 
     }
@@ -29,6 +32,7 @@ public class PlayerAbility : MonoBehaviour
         EventManager.RemoveListener<WaterSeed>(WaterSeedCallBack);
         EventManager.RemoveListener<FieldSown>(FieldSownCallBack);
         EventManager.RemoveListener<FieldWatered>(FieldWateredCallBack);
+        EventManager.RemoveListener<FieldHarvested>(FieldHarvestedCallBack);
         EventManager.RemoveListener<ChangeTool>(ChangeToolCallBack);
 
     }
@@ -42,6 +46,8 @@ public class PlayerAbility : MonoBehaviour
                 Sowing();
             if (currentCropField.IsSown() && tool.CurrentTool == Tool.Water)
                 Watering();
+            if (currentCropField.IsWatered() && tool.CurrentTool == Tool.Harvest)
+                Harvesting();
         }
     }
 
@@ -51,6 +57,7 @@ public class PlayerAbility : MonoBehaviour
         {
             StopSowing();
             StopWatering();
+            StopHarvesting();
             currentCropField = null;
         }
     }
@@ -66,6 +73,22 @@ public class PlayerAbility : MonoBehaviour
         waterParticle.Stop();
     } 
     public void ThrowWater() => waterParticle.Play();
+
+    public void Harvesting() => anim.PlayHarvest();
+    public void StopHarvesting() => anim.StopPlayHarvest();
+    public void ScytheDamage()
+    {
+        if(currentCropField != null)
+        {
+            currentCropField.HarvestingField(harvestPoint.position, harvestRange);
+        }
+    }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(harvestPoint.position, harvestRange);
+    //}
 
     public void SowSeedCallBack(SowSeed e)
     {
@@ -97,6 +120,12 @@ public class PlayerAbility : MonoBehaviour
             StopWatering();
     }
 
+    private void FieldHarvestedCallBack(FieldHarvested e)
+    {
+        if (e.cropField == currentCropField)
+            StopHarvesting();
+    }
+
     private void ChangeToolCallBack(ChangeTool e)
     {
         if (currentCropField == null) return;
@@ -107,23 +136,27 @@ public class PlayerAbility : MonoBehaviour
             case Tool.Empty:
                 StopSowing();
                 StopWatering();
+                StopHarvesting();
                 break;
 
             case Tool.Sow:
                 StopWatering();
+                StopHarvesting();
                 if (currentCropField.IsEmpty()) Sowing();
                 break;
 
             case Tool.Water:
                 StopSowing();
+                StopHarvesting();
                 if(currentCropField.IsSown()) Watering();
                 break;
 
             case Tool.Harvest:
                 StopSowing();
                 StopWatering();
+                if (currentCropField.IsWatered()) Harvesting();
                 break;
-        }
 
+        }
     }
 }

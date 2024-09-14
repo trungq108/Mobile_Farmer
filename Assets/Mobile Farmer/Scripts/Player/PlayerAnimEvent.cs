@@ -9,5 +9,6 @@ public class PlayerAnimEvent : MonoBehaviour
     public void ThrowSeedAnimEvent() => ability.ThrowSeed();
     public void ThrowWaterAnimEnvent() => ability.ThrowWater();
 
+    public void HarvestAnimEvent() => ability.ScytheDamage();
 
 }

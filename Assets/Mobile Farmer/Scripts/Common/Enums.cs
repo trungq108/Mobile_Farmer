@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 
 public enum State
 {
@@ -14,4 +13,14 @@ public enum Tool
     Water,
     Harvest,
 
+}
+
+public enum CropType
+{
+    Corn,
+    Tomato,
+    Carrot,
+    Eggplant,
+    Pumpkin,
+    Turnip,
 }

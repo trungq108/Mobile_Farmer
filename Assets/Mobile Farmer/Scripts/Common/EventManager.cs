@@ -64,9 +64,19 @@ public class FieldWatered
     public CropField cropField;
 }
 
+public class FieldHarvested
+{
+    public CropField cropField;
+}
+
 public class ChangeTool
 {
     public Tool toolChange;
+}
+
+public class OnCropHarvest
+{
+    public CropData cropData;
 }
 
 
