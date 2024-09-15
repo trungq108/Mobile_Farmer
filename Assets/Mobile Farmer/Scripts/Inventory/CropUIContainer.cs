@@ -14,7 +14,7 @@ public class CropUIContainer : MonoBehaviour
     public void Configue(Item item)
     {
         this.Item = item;
-        this.cropIcon.sprite = GameAsset.Instance.GetSpriteFromCropType(item.cropType);
+        this.cropIcon.sprite = GameAsset.Instance.GetCropSprite(item.cropType);
         this.amountText.text = item.amount.ToString();
     }
 }

@@ -9,9 +9,10 @@ public class CropDataSO : ScriptableObject
 }
 
 [System.Serializable]
-public class CropData
+public struct CropData
 {
     public CropType cropType;
     public GameObject cropPrefab;
     public Sprite cropIcon;
+    public int cropPrice;
 }

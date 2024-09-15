@@ -18,7 +18,8 @@ public class CropTile : MonoBehaviour
     public void Sow(CropData data)
     {
         state = State.Sown;
-        crop = LeanPool.Spawn(data.cropPrefab, transform.position, Quaternion.identity, this.transform).GetComponent<Crop>();
+        crop = LeanPool.Spawn(data.cropPrefab, transform.position, Quaternion.identity, this.transform)
+                       .GetComponent<Crop>();
         crop.OnInit(data);
     }
 

@@ -16,10 +16,15 @@ public class InventoryUIManager : Singleton<InventoryUIManager>
         this.items = items;
         for (int i = 0; i < items.Count; i++)
         {
-            CropUIContainer container = Instantiate(containerPrefab, containerParent);
-            container.Configue(items[i]);
-            containers.Add(container);
+            CreatContainer(items[i]);
         }
+    }
+
+    public void CreatContainer(Item item)
+    {
+        CropUIContainer container = Instantiate(containerPrefab, containerParent);
+        container.Configue(item);
+        containers.Add(container);
     }
 
     public void UpdateUIContainers(Item item)
@@ -31,6 +36,5 @@ public class InventoryUIManager : Singleton<InventoryUIManager>
                 containers[i].Configue(item);
             }
         }
-
     }
 }

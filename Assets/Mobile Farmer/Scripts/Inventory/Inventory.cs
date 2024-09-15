@@ -19,10 +19,9 @@ public class Inventory
 {
     public List<Item> items = new List<Item>();
 
-    public void TryAddItem(CropData cropData)
+    public void UpdateInventory(CropData cropData)
     {
         bool itemFound = false;
-
         for (int i = 0; i < items.Count; i++)
         {
             if (items[i].cropType == cropData.cropType)
@@ -30,18 +29,26 @@ public class Inventory
                 items[i].amount++;
                 InventoryUIManager.Instance.UpdateUIContainers(items[i]);
                 itemFound = true;
-                break; 
+                break;
             }
         }
         if (!itemFound)
         {
-            items.Add(new Item(cropData.cropType, 1));
+            Item newItem = new Item(cropData.cropType, 1);
+            items.Add(newItem);
+            InventoryUIManager.Instance.CreatContainer(newItem);
         }
+    }
 
-        Debug.Log("Item Count = " + items.Count);
+    public void SellingItem()
+    {
+        int moneyGet = 0;
         for (int i = 0; i < items.Count; i++)
         {
-            Debug.Log(items[i] + " " + items[i].cropType.ToString() + " " + items[i].amount);
+            moneyGet += items[i].amount * GameAsset.Instance.GetCropPrice(items[i].cropType);
+            items[i].amount = 0;
+            InventoryUIManager.Instance.UpdateUIContainers(items[i]);
         }
+        CurrencyManager.Instance.ChangeCurrency(moneyGet);
     }
 }
