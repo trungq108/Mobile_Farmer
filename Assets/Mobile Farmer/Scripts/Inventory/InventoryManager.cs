@@ -53,9 +53,4 @@ public class InventoryManager : Singleton<InventoryManager>
         SaveInventory();
     }
 
-    // DEBUG
-    [Button] private void ResetInventory()
-    {
-        ES3.DeleteFile();
-    }
 }

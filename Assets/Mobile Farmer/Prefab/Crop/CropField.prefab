@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3641884251066129394}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TileParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileParent: {fileID: 3641884251066129394}
-  cropData: {fileID: 11400000, guid: c57e842269b213b49b2dff9e26c24934, type: 2}
 --- !u!1001 &1700427576961205888
 PrefabInstance:
   m_ObjectHideFlags: 0

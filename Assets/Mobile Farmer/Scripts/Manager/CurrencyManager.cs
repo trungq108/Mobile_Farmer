@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -33,10 +34,16 @@ public class CurrencyManager : Singleton<CurrencyManager>
         UpdateDisplayCurrency();
     }
 
+    public bool IsEnougtCoin() => currency > 1;
+
     public void SaveCurrency()
     {
         ES3.Save<int>(CURRENCY, currency);
         UpdateDisplayCurrency();
     }
 
+    [Button] private void Add100Coin()
+    {
+        ChangeCurrency(100);
+    }
 }

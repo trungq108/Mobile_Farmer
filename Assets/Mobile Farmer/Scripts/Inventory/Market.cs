@@ -6,7 +6,7 @@ public class Market : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(Constain.PLAYER))
         {
             OnCropSelling e = new OnCropSelling();
             EventManager.TriggerEvent(e);
