@@ -30,11 +30,11 @@ public class CurrencyManager : Singleton<CurrencyManager>
 
     public void LoadCurrency()
     {
-        currency = ES3.Load<int>(CURRENCY, 0);
+        currency = ES3.Load<int>(CURRENCY, 100);
         UpdateDisplayCurrency();
     }
 
-    public bool IsEnougtCoin() => currency > 1;
+    public bool IsEnougtCoin() => currency >= 1;
 
     public void SaveCurrency()
     {

@@ -79,10 +79,12 @@ public class OnCropHarvest
     public CropData cropData;
 }
 
-public class OnCropSelling 
-{ 
+public class OnCropSelling { }
 
+public class CreatNewChunk
+{
+    public Vector3 newChunkPosition;
+    public Quaternion newChunkRotation = Quaternion.identity;
 }
-
 
 

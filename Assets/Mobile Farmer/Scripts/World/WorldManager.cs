@@ -7,30 +7,40 @@ public class WorldManager : MonoBehaviour
     [SerializeField] private Transform world;
     [SerializeField] private Chunk chunkPrefab;
 
-    private List<Chunk> worldChunks = new List<Chunk>();
-    private const string WORLDCHUNKS = "worldChunks";
+    private int chunkIndex;
+    private const string CHUNKINDEX = "chunkIndex";
     private const string CHUNK = "Chunk_";
 
+    private void OnEnable()
+    {
+        EventManager.AddListener<CreatNewChunk>(CreatNewChunkCallBack);
+              
+    }
 
-    private void Awake()
+    private void OnDisable()
+    {
+        EventManager.RemoveListener<CreatNewChunk>(CreatNewChunkCallBack);
+
+    }
+
+    private void Start()
     {
         LoadWorld();
     }
 
     public void LoadWorld()
     {
-        if (!ES3.KeyExists(WORLDCHUNKS))
+        if (!ES3.KeyExists(CHUNKINDEX))
         {
-            Chunk chunk = Instantiate(chunkPrefab, world);
-            chunk.transform.position = Vector3.zero;
-            chunk.transform.rotation = Quaternion.identity;
-            chunk.LoadChunk(CHUNK + 0);
-            worldChunks.Add(chunk);
+            CreatNewChunk e = new CreatNewChunk();
+            e.newChunkPosition = Vector3.zero;
+            EventManager.TriggerEvent(e);
         }
         else
         {
-            worldChunks = ES3.Load<List<Chunk>>(WORLDCHUNKS);
-            for (int i = 0; i < worldChunks.Count; i++)
+            chunkIndex = ES3.Load<int>(CHUNKINDEX);
+            Debug.Log(chunkIndex);
+            for (int i = 0; i < chunkIndex; i++)
             {
                 Chunk chunk = Instantiate(chunkPrefab, world);
                 chunk.LoadChunk(CHUNK + i);
@@ -38,24 +48,30 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    public void CreatNewChunkCallBack(CreatNewChunk e)
+    {
+        Chunk chunk = Instantiate(chunkPrefab, world);
+        chunk.transform.position = e.newChunkPosition;
+        chunk.transform.rotation = e.newChunkRotation;
+        chunk.OnInit();
+    }
+
     [Button]
     public void SaveWorld()
     {
-        worldChunks.Clear();
+        chunkIndex = 0;
         for (int i = 0; i < world.childCount; i++)
         {
             Chunk chunk = world.GetChild(i).GetComponent<Chunk>();
             chunk.SaveChunk(CHUNK + i);
-            worldChunks.Add(chunk);
+            chunkIndex++;
         }
-
-        ES3.Save<List<Chunk>>(WORLDCHUNKS, worldChunks);
+        Debug.Log(chunkIndex);
+        ES3.Save<int>(CHUNKINDEX, chunkIndex);
     }
 
-    // DEBUG
-    [Button]
-    private void ResetGame()
+    private void OnApplicationQuit()
     {
-        ES3.DeleteFile();
+        SaveWorld();
     }
 }
