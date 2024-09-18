@@ -50,6 +50,9 @@ public class Inventory
             items[i].amount = 0;
             InventoryUIManager.Instance.UpdateUIContainers(items[i]);
         }
-        CurrencyManager.Instance.ChangeCurrency(moneyGet);
+
+        OnCoinCollect e = new OnCoinCollect();
+        e.amount = moneyGet;
+        EventManager.TriggerEvent(e);
     }
 }

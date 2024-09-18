@@ -84,12 +84,6 @@ public class PlayerAbility : MonoBehaviour
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(harvestPoint.position, harvestRange);
-    //}
-
     public void SowSeedCallBack(SowSeed e)
     {
         Vector3[] collisionPositions = e.collisionPositions;

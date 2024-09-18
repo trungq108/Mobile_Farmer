@@ -39,7 +39,6 @@ public class WorldManager : MonoBehaviour
         else
         {
             chunkIndex = ES3.Load<int>(CHUNKINDEX);
-            Debug.Log(chunkIndex);
             for (int i = 0; i < chunkIndex; i++)
             {
                 Chunk chunk = Instantiate(chunkPrefab, world);
@@ -66,7 +65,6 @@ public class WorldManager : MonoBehaviour
             chunk.SaveChunk(CHUNK + i);
             chunkIndex++;
         }
-        Debug.Log(chunkIndex);
         ES3.Save<int>(CHUNKINDEX, chunkIndex);
     }
 

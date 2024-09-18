@@ -80,6 +80,10 @@ public class OnCropHarvest
 }
 
 public class OnCropSelling { }
+public class OnCoinCollect
+{
+    public int amount;
+}
 
 public class CreatNewChunk
 {
