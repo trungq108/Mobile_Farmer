@@ -91,4 +91,17 @@ public class CreatNewChunk
     public Quaternion newChunkRotation = Quaternion.identity;
 }
 
+public class EnterTreeZone
+{
+    public Tree appleTree;
+}
+
+public class ExitTreeZone
+{
+    public Tree appleTree;
+}
+
+public class StartTreeMode
+{
+}
 

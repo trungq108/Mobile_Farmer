@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public Player Player {  get; private set; }
+    public PlayerDetection Player {  get; private set; }
 
     private void Awake()
     {
-        Player = FindObjectOfType<Player>();
+        Player = FindObjectOfType<PlayerDetection>();
     }
 }

@@ -61,4 +61,6 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetLayerWeight(havestAnimLayer, 0);
         scythe.SetActive(false);
     }
+
+
 }

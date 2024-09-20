@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShaderInteract : MonoBehaviour
 {
     [SerializeField] private Material cropMaterial;
-    private Player player;
+    private PlayerDetection player;
 
     private void Start()
     {

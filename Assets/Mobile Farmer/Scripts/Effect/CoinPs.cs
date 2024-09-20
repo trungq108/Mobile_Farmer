@@ -7,7 +7,7 @@ public class CoinPs : MonoBehaviour
 {
     [SerializeField] private ParticleSystem coinPS;
     [SerializeField] private Transform coinRectTranform;
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 5f;  
 
     private void OnEnable()
     {
@@ -29,7 +29,7 @@ public class CoinPs : MonoBehaviour
         coinPS.emission.SetBurst(0, burst);
 
         ParticleSystem.MainModule main = coinPS.main;
-        main.gravityModifier = 1;
+        main.gravityModifier = 2;
         coinPS.Play();
 
         StartCoroutine(nameof(MoveCoins), amount);
@@ -49,7 +49,7 @@ public class CoinPs : MonoBehaviour
             for (int i = 0; i < particles.Length; i++)
             {
                 particles[i].position = Vector3.MoveTowards(particles[i].position, coinRectTranform.position, moveSpeed * Time.deltaTime);
-                if(Vector3.Distance(particles[i].position, coinRectTranform.position) < 0.01f)
+                if (Vector3.Distance(particles[i].position, coinRectTranform.position) <= 0.01f)
                 {
                     particles[i].position = Vector3.one * 1000f;
                     CurrencyManager.Instance.ChangeCurrency(1);

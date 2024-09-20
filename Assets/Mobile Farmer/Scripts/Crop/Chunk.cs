@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,13 +17,12 @@ public class Chunk : MonoBehaviour
     [SerializeField] private LayerMask chunkLayerMask;
 
     private int currentPrice;
-    private bool isUnlock = false;
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag(Constain.PLAYER))
         {
-            if (isUnlock) return;
+            if (currentPrice <= 0) return;
             if (!CurrencyManager.Instance.IsEnougtCoin()) return;
             TryUnlockChunk();
         }
@@ -41,7 +41,6 @@ public class Chunk : MonoBehaviour
     {
         unlock_State_GO.SetActive(true);
         lock_State_GO.SetActive(false);
-        isUnlock = true;
 
         for(int i = 0; i < checkPoints.Length; i++)
         {
@@ -70,7 +69,6 @@ public class Chunk : MonoBehaviour
         {
             unlock_State_GO.SetActive(true);
             lock_State_GO.SetActive(false);
-            isUnlock = true;
         }
     }
 

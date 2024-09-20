@@ -34,7 +34,7 @@ public class CropField : MonoBehaviour
 
             if (cropTile == null) continue;
             if (!cropTile.IsEmpty()) continue;
-            cropTile.Sow(cropData.DataBase[1]);
+            cropTile.Sow(cropData.DataBase[0]);
             sownTileIndex++;
         }
 

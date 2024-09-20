@@ -14,6 +14,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] [Range(0f, 3f)] private float harvestRange;
 
     private CropField currentCropField;
+    private Tree currentTree;
 
     private void OnEnable()
     {
@@ -153,4 +154,6 @@ public class PlayerAbility : MonoBehaviour
 
         }
     }
+
+    
 }
