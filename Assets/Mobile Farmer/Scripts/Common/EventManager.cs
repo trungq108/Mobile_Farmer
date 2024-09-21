@@ -93,15 +93,21 @@ public class CreatNewChunk
 
 public class EnterTreeZone
 {
-    public Tree appleTree;
+    public Tree tree;
 }
 
 public class ExitTreeZone
 {
-    public Tree appleTree;
+    public Tree tree;
 }
 
-public class StartTreeMode
+public class EnterTreeMode
 {
+    public Tree tree;
+    public Vector3 playerShakeTreePos;
 }
 
+public class ExitTreeMode
+{
+
+}

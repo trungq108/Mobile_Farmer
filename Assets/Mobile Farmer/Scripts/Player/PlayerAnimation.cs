@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class PlayerAnimation : MonoBehaviour
     private int sowAnimLayer = 1;
     private int waterAnimLayer = 2;
     private int havestAnimLayer = 3;
+    private int shakeAnimLayer = 4;
 
     private void Awake()
     {
@@ -23,7 +25,6 @@ public class PlayerAnimation : MonoBehaviour
         if(direction.sqrMagnitude > 0f)
         {
             animator.Play("Run");
-            animator.transform.forward = direction; // Rotate character render to the direction, NOT the character himself
         }
         else animator.Play("Idle");
     }
@@ -62,5 +63,15 @@ public class PlayerAnimation : MonoBehaviour
         scythe.SetActive(false);
     }
 
+    public void PlayShakeTree()
+    {
+        animator.SetLayerWeight(shakeAnimLayer, 1);
+        animator.Play("ShakeTree", shakeAnimLayer);
 
+    }
+
+    public void StopShake()
+    {
+        animator.SetLayerWeight(shakeAnimLayer, 0);
+    }
 }

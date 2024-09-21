@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 
 public class PlayerAbility : MonoBehaviour
 {
+    [Header("Crop Ability")]
+
     [SerializeField] private PlayerAnimation anim;
     [SerializeField] private PlayerTool tool;
     [SerializeField] private ParticleSystem seedParticle;
@@ -16,6 +18,14 @@ public class PlayerAbility : MonoBehaviour
     private CropField currentCropField;
     private Tree currentTree;
 
+    [Header("Tree Ability")]
+    private Vector2 initMousePos;
+    private Vector2 currentMousePos;
+    private bool isOnTreeMode = false;
+    private bool isDragging = false;
+    [SerializeField] private float swipeThreshold;
+
+
     private void OnEnable()
     {
         EventManager.AddListener<SowSeed>(SowSeedCallBack);
@@ -24,6 +34,8 @@ public class PlayerAbility : MonoBehaviour
         EventManager.AddListener<FieldWatered>(FieldWateredCallBack);
         EventManager.AddListener<FieldHarvested>(FieldHarvestedCallBack);
         EventManager.AddListener<ChangeTool>(ChangeToolCallBack);
+        EventManager.AddListener<EnterTreeMode>(EnterTreeModeCallBack);
+        EventManager.AddListener<ExitTreeMode>(ExitTreeModeCallBack);
 
     }
 
@@ -35,9 +47,10 @@ public class PlayerAbility : MonoBehaviour
         EventManager.RemoveListener<FieldWatered>(FieldWateredCallBack);
         EventManager.RemoveListener<FieldHarvested>(FieldHarvestedCallBack);
         EventManager.RemoveListener<ChangeTool>(ChangeToolCallBack);
+        EventManager.RemoveListener<EnterTreeMode>(EnterTreeModeCallBack);
+        EventManager.RemoveListener<ExitTreeMode>(ExitTreeModeCallBack);
 
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("CropField"))
@@ -155,5 +168,58 @@ public class PlayerAbility : MonoBehaviour
         }
     }
 
-    
+    private void Update()
+    {
+        if(isOnTreeMode)
+            HandleMouseInput();
+    }
+
+    private void HandleMouseInput()
+    {
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            isDragging = true;
+            initMousePos = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButton(0) && isDragging)
+        {
+            OnSwipe();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            OnRelease();
+        }
+    }
+
+    private void OnSwipe()
+    {
+        currentMousePos = Input.mousePosition;
+        Vector2 swipeDelta = currentMousePos - initMousePos;
+        if (Mathf.Abs(swipeDelta.x) > swipeThreshold)
+        {
+            anim.PlayShakeTree();
+            currentTree.ShakeTree();
+            initMousePos = Input.mousePosition;
+        }       
+    }
+
+    private void OnRelease()
+    {
+        isDragging = false;
+    }
+
+    private void EnterTreeModeCallBack(EnterTreeMode e)
+    {
+        currentTree = e.tree;
+        isOnTreeMode = true;
+        GetComponent<PlayerController>().SetTreeModePosition(e.playerShakeTreePos, e.tree.transform.position);
+    }
+
+    private void ExitTreeModeCallBack(ExitTreeMode e)
+    {
+        currentTree = null;
+        isOnTreeMode = false;
+    }
 }

@@ -10,12 +10,12 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.AddListener<StartTreeMode>(StartTreeModeCallBack);
+        EventManager.AddListener<EnterTreeMode>(StartTreeModeCallBack);
     }
 
     private void OnDisable()
     {
-        EventManager.RemoveListener<StartTreeMode>(StartTreeModeCallBack);
+        EventManager.RemoveListener<EnterTreeMode>(StartTreeModeCallBack);
     }
 
     private void Awake()
@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
         ShowPanel(GAME_PANEL);
     }
 
-    public void StartTreeModeCallBack(StartTreeMode e)
+    public void StartTreeModeCallBack(EnterTreeMode e)
     {
         ShowPanel(TREE_PANEL);
     }

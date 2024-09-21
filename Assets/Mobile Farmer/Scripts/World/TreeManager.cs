@@ -32,21 +32,24 @@ public class TreeManager : Singleton<TreeManager>
 
     private void StartTreeMode()
     {
-        currentTree.OnTree();
-        StartTreeMode e = new StartTreeMode();
+        currentTree.EnterTreeMode();
+
+        EnterTreeMode e = new EnterTreeMode();
+        e.tree = currentTree;
+        e.playerShakeTreePos = currentTree.PlayerShakeTreePos.position;
         EventManager.TriggerEvent(e);
     }
 
     private void EnterTreeZoneCallBack(EnterTreeZone e)
     {
-        currentTree = e.appleTree;
+        currentTree = e.tree;
         TreeButton.SetActive(true);
         ToolButtonsGroup.SetActive(false);
     }
 
     private void ExitTreeZoneCallBack(ExitTreeZone e)
     {
-        e.appleTree.OffTree(); //currentTree == e.appleTree
+        currentTree.ExitTreeMode();
         currentTree = null;
         TreeButton.SetActive(false);
         ToolButtonsGroup.SetActive(true);
