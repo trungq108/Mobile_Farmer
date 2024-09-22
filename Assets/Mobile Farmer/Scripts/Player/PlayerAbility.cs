@@ -221,5 +221,6 @@ public class PlayerAbility : MonoBehaviour
     {
         currentTree = null;
         isOnTreeMode = false;
+        anim.StopShakeTree();
     }
 }

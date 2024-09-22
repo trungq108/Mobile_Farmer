@@ -70,7 +70,7 @@ public class PlayerAnimation : MonoBehaviour
 
     }
 
-    public void StopShake()
+    public void StopShakeTree()
     {
         animator.SetLayerWeight(shakeAnimLayer, 0);
     }

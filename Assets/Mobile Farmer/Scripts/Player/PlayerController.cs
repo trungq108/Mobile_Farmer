@@ -11,6 +11,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] private float moveSpeed;
 
+    //private void OnEnable()
+    //{
+    //    EventManager.AddListener<EnterTreeMode>(EnterTreeModeCallBack);
+    //    EventManager.AddListener<ExitTreeMode>(ExitTreeModeCallBack);
+    //}
+
+    //private void OnDisable()
+    //{
+    //    EventManager.RemoveListener<EnterTreeMode>(EnterTreeModeCallBack);
+    //    EventManager.RemoveListener<ExitTreeMode>(ExitTreeModeCallBack);
+    //}
+
     private void Update()
     {
         Move();

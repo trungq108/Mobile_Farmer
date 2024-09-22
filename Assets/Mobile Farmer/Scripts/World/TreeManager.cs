@@ -7,6 +7,8 @@ public class TreeManager : Singleton<TreeManager>
 {
     [SerializeField] private GameObject ToolButtonsGroup;
     [SerializeField] private GameObject TreeButton;
+    [SerializeField] private Slider treeModeSlider;
+
     private Button treeButton;
     private Tree currentTree;
 
@@ -28,6 +30,7 @@ public class TreeManager : Singleton<TreeManager>
         treeButton.onClick.AddListener(() => StartTreeMode());
         TreeButton.SetActive(false);
         ToolButtonsGroup.SetActive(true);
+        treeModeSlider.value = 1f;
     }
 
     private void StartTreeMode()
@@ -49,9 +52,24 @@ public class TreeManager : Singleton<TreeManager>
 
     private void ExitTreeZoneCallBack(ExitTreeZone e)
     {
-        currentTree.ExitTreeMode();
         currentTree = null;
         TreeButton.SetActive(false);
         ToolButtonsGroup.SetActive(true);
+    }
+
+    public void UpdateSlider(float value)
+    {
+        treeModeSlider.value = value;
+        if(treeModeSlider.value <= 0)
+        {
+            ExitTreeMode();
+        }
+    }
+
+    private void ExitTreeMode()
+    {
+        currentTree.ExitTreeMode();
+        ExitTreeMode e = new ExitTreeMode();
+        EventManager.TriggerEvent(e);
     }
 }

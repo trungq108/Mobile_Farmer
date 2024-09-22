@@ -81,7 +81,7 @@ public class MobileJoystick : Singleton<MobileJoystick>
 
     public Vector3 GetMoveVector()
     {
-        float canvasScale = GetComponentInParent<Canvas>().GetComponent<RectTransform>().localScale.x;
+        float canvasScale = canvasRT.localScale.x;
         return move / canvasScale;
     }
 }

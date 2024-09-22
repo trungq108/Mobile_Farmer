@@ -6,16 +6,20 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject GAME_PANEL;
     [SerializeField] private GameObject TREE_PANEL;
-    List<GameObject> panels = new List<GameObject>();
+    private List<GameObject> panels = new List<GameObject>();
 
     private void OnEnable()
     {
-        EventManager.AddListener<EnterTreeMode>(StartTreeModeCallBack);
+        EventManager.AddListener<EnterTreeMode>(EnterTreeModeCallBack);
+        EventManager.AddListener<ExitTreeMode>(ExitTreeModeCallBack);
+
     }
 
     private void OnDisable()
     {
-        EventManager.RemoveListener<EnterTreeMode>(StartTreeModeCallBack);
+        EventManager.RemoveListener<EnterTreeMode>(EnterTreeModeCallBack);
+        EventManager.RemoveListener<ExitTreeMode>(ExitTreeModeCallBack);
+
     }
 
     private void Awake()
@@ -24,9 +28,14 @@ public class UIManager : MonoBehaviour
         ShowPanel(GAME_PANEL);
     }
 
-    public void StartTreeModeCallBack(EnterTreeMode e)
+    public void EnterTreeModeCallBack(EnterTreeMode e)
     {
         ShowPanel(TREE_PANEL);
+    }
+
+    public void ExitTreeModeCallBack(ExitTreeMode e)
+    {
+        ShowPanel(GAME_PANEL);
     }
 
     public void ShowPanel(GameObject panel)
@@ -37,7 +46,6 @@ public class UIManager : MonoBehaviour
         }
         //SoundManager.ButtonClick();
     }
-
 
 
 }
